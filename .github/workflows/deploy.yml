@@ -1,0 +1,61 @@
+
+
+name: Docker CI
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubantu-latest
+
+    steps:
+      - name : Checkout Repository
+        uses : actions/checkout@v4
+      
+      - name : Login to DockerHub
+        uses : docker/login-action@v3
+        with : 
+           username : ${{ secret.DOCKER_USERNAME }}
+           password : ${{ secret.DOCKER_PASSWORD }}
+
+      - name : Build Backend
+        run : |
+          docker build \
+            -t ${{ secrets.DOCKER_USERNAME }}/backend:${{ github.sha }} \
+            ./backend
+
+      - name : Build Frontend 
+        run : |
+          docker build \
+          -t ${{ secrets.DOCKER_USERNAME }}/frontend:${{ github.sha }} \
+          ./frontend
+
+      - name : Push Backend
+        run : docker push ${{ secrets.DOCKER_USERNAME }}/backend:latest
+
+      - name : Push Frontend
+        run : docker push ${{ secrets.DOCKER_USERNAME}}/frontend:latest
+
+      - name : Deploy
+        uses : appleboy/ssh-action@v1.2.0
+
+        with : 
+          host : ${{ secrets.SERVER_IP }}
+          username : ${{ secrets.SERVER_USER }}
+          key : ${{ secrets.PRIVATE_KEY }}
+
+          scripts: |
+            cd /home/rakesh/Desktop/practices/nginx/fullstack_app/
+
+            docker compose pull
+
+            docker compose up -d
+
+
+
+
+      
