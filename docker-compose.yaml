@@ -15,21 +15,21 @@ services:
       - backend3
 
   frontend:
-    build: ./frontend
+    image: rakeshkarki/frontend:latest
     expose:
       - "3000"
   
   backend1:
-    build: ./backend
+    image: rakeshkarki/backend:latest
     expose:
       - "5555"
 
   backend2:
-    build: ./backend
+    image: rakeshkarki/backend:latest
     expose: 
       - "5555"
  
   backend3:
-     build: ./backend
+     image: rakeshkarki/backend:latest
      expose:
        - "5555"
