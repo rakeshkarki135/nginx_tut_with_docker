@@ -65,6 +65,8 @@ jobs:
         #     docker compose up -d
         run : |
           cd /home/rakesh/Desktop/practices/nginx/fullstack_app/
+          
+          docker compose down --remove-orphans
 
           docker compose pull
 
