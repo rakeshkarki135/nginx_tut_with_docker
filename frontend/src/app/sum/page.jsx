@@ -31,7 +31,7 @@ const SumPage = () => {
         onSubmit={handleSubmit}
         className="w-1/2 mt-60 flex flex-col gap-4"
       >
-        <h1 className="text-center text-3xl font-bold text-gray-600 mb-10">
+        <h1 className="text-center text-4xl font-bold text-gray-600 mb-10">
           Calculate Sum of Two Numbers
         </h1>
         <input
